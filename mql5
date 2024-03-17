@@ -1,0 +1,94 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                               Currency Index Pro |
+//|                                      Developer's Site: forexroboteasy.com |
+//|                                                Development: Forex Robot Easy Team |
+//+------------------------------------------------------------------+
+
+#property strict
+
+//+------------------------------------------------------------------+
+//| Custom Indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set indicator window properties
+    IndicatorSetString(INDICATOR_SHORTNAME, 'Currency Index Pro');
+    IndicatorSetInteger(INDICATOR_DIGITS, _Digits);
+
+    // Create the currency index pro window
+    WindowCreate('Currency Index Pro', 0, 0, 400, 400, 0, 'CIP');
+    WindowSetOnMove(CIP_OnMove);
+
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Custom Indicator deinitialization function                       |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    WindowDestroy('Currency Index Pro');
+}
+
+//+------------------------------------------------------------------+
+//| Currency Index Pro window move event handler                      |
+//+------------------------------------------------------------------+
+void CIP_OnMove(const int x, const int y)
+{
+    // Update the window position
+    WindowRedraw();
+}
+
+//+------------------------------------------------------------------+
+//| Custom Indicator iteration function                              |
+//+------------------------------------------------------------------+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+    // Calculate the currency index pro values
+    double cip_values[65];
+    CalculateCurrencyIndexPro(cip_values);
+
+    // Plot the currency index pro values
+    for (int i = prev_calculated; i < rates_total; i++)
+    {
+        PlotIndex(i, cip_values[i], 'CIP');
+    }
+
+    return(rates_total);
+}
+
+//+------------------------------------------------------------------+
+//| Function to calculate the currency index pro values               |
+//+------------------------------------------------------------------+
+void CalculateCurrencyIndexPro(double &out_values[])
+{
+    // Implementation of the currency index pro calculation algorithm
+    // ...
+
+    // Example calculation
+    for (int i = 0; i < 65; i++)
+    {
+        out_values[i] = i;
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Function to plot the currency index pro values                    |
+//+------------------------------------------------------------------+
+void PlotIndex(const int index,
+               const double value,
+               const string label)
+{
+    // Plot the currency index pro value on the chart
+    Plot(index, value, label);
+}
